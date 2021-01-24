@@ -12,8 +12,19 @@ public class Role {
 
     private String name;
 
+    @Column(name = "display_name")
+    private String displayName;
+
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
+
+    public Role() {
+    }
+
+    public Role(String name, String displayName) {
+        this.name = name;
+        this.displayName = displayName;
+    }
 
     public Long getId() {
         return id;
@@ -37,5 +48,13 @@ public class Role {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

@@ -1,5 +1,6 @@
 package com.taylanunutmaz.marketplace.service;
 
+import com.taylanunutmaz.marketplace.model.Role;
 import com.taylanunutmaz.marketplace.model.User;
 import com.taylanunutmaz.marketplace.repository.RoleRepository;
 import com.taylanunutmaz.marketplace.repository.UserRepository;
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,7 +28,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>(roleRepository.findAll()));
         userRepository.save(user);
     }
 

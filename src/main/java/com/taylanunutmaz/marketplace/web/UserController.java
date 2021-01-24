@@ -1,6 +1,8 @@
 package com.taylanunutmaz.marketplace.web;
 
+import com.taylanunutmaz.marketplace.model.Role;
 import com.taylanunutmaz.marketplace.model.User;
+import com.taylanunutmaz.marketplace.repository.RoleRepository;
 import com.taylanunutmaz.marketplace.service.SecurityService;
 import com.taylanunutmaz.marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
     private UserService userService;
     private SecurityService securityService;
+    private RoleRepository roleRepository;
     private UserValidator userValidator;
 
     @Autowired
-    public UserController(UserService userService, SecurityService securityService, UserValidator userValidator) {
+    public UserController(UserService userService, SecurityService securityService, UserValidator userValidator, RoleRepository roleRepository) {
         this.userService = userService;
         this.securityService = securityService;
         this.userValidator = userValidator;
+        this.roleRepository = roleRepository;
     }
 
     @GetMapping("/registration")
@@ -31,15 +35,18 @@ public class UserController {
         }
 
         model.addAttribute("userForm", new User());
+        model.addAttribute("roles", roleRepository.findAll());
 
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("roles", roleRepository.findAll());
+
             return "registration";
         }
 
