@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,18 +28,11 @@ public class Product {
     @ManyToOne
     private Currency currency;
 
-    @ManyToOne
-    private Brand brand;
-
     @ManyToMany
-    @JoinTable(
-        name = "category_product",
-        joinColumns = @JoinColumn(name = "products_id"),
-        inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
     private Set<Category> categories;
 
     @OneToMany
+    @JoinColumn(name = "product_id")
     private Set<ProductImage> images;
 
     public Product() {
@@ -107,14 +100,6 @@ public class Product {
 
     public void setVatRate(Integer vatRate) {
         this.vatRate = vatRate;
-    }
-
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
     }
 
     public Set<Category> getCategories() {

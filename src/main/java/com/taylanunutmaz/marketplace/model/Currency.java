@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "currencies")
+@Table(name = "currency")
 public class Currency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,9 +15,15 @@ public class Currency {
     private String symbol;
 
     @OneToMany
+    @JoinColumn(name = "currency_id")
     private Set<Product> products;
 
     public Currency() {
+    }
+
+    public Currency(String name, String symbol) {
+        this.name = name;
+        this.symbol = symbol;
     }
 
     public Long getId() {

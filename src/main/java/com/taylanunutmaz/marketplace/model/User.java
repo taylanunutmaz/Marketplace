@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +19,9 @@ public class User {
 
     @ManyToMany
     private Set<Role> roles;
+
+    @OneToOne(mappedBy = "user")
+    private ProfileImage image;
 
     public User() {
     }

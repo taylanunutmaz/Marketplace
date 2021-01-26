@@ -16,15 +16,13 @@ import java.util.Iterator;
 @RequestMapping("/products")
 public class ProductController {
     private CurrencyRepository currencyRepository;
-    private BrandRepository brandRepository;
     private CategoryRepository categoryRepository;
     private ProductImageRepository productImageRepository;
     private ProductRepository productRepository;
 
     @Autowired
-    public ProductController(CurrencyRepository currencyRepository, BrandRepository brandRepository, CategoryRepository categoryRepository, ProductImageRepository productImageRepository, ProductRepository productRepository) {
+    public ProductController(CurrencyRepository currencyRepository, CategoryRepository categoryRepository, ProductImageRepository productImageRepository, ProductRepository productRepository) {
         this.currencyRepository = currencyRepository;
-        this.brandRepository = brandRepository;
         this.categoryRepository = categoryRepository;
         this.productImageRepository = productImageRepository;
         this.productRepository = productRepository;
@@ -36,7 +34,6 @@ public class ProductController {
 
         model.addAttribute("productForm", new Product());
         model.addAttribute("currencies", currencyRepository.findAll());
-        model.addAttribute("brands", brandRepository.findAll());
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("images", productImageRepository.findAll());
 
@@ -49,7 +46,10 @@ public class ProductController {
         // validate
 
         Product product = productRepository.save(productForm);
+        product.setCategories(product.getCategories());
+
         model.addAttribute("product", product);
+
         return "products/show";
     }
 
@@ -60,6 +60,7 @@ public class ProductController {
 
         return "products/list";
     }
+
     @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_BUYER')")
     @GetMapping("/{product}")
     public String show(@PathVariable(name = "product") Product product, Model model) {

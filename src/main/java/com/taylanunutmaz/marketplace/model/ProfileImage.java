@@ -1,21 +1,23 @@
 package com.taylanunutmaz.marketplace.model;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name = "brands")
-public class Brand {
+@Table(name = "profile_image")
+public class ProfileImage implements Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String url;
+
     private String name;
 
-    @OneToMany
-    private Set<Product> product;
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private User user;
 
-    public Brand() {
+    public ProfileImage() {
     }
 
     public Long getId() {
@@ -26,6 +28,14 @@ public class Brand {
         this.id = id;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getName() {
         return name;
     }
@@ -34,11 +44,11 @@ public class Brand {
         this.name = name;
     }
 
-    public Set<Product> getProduct() {
-        return product;
+    public User getUser() {
+        return user;
     }
 
-    public void setProduct(Set<Product> product) {
-        this.product = product;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

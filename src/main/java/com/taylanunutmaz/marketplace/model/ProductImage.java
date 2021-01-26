@@ -3,8 +3,8 @@ package com.taylanunutmaz.marketplace.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "product_images")
-public class ProductImage {
+@Table(name = "product_image")
+public class ProductImage implements Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -51,17 +51,6 @@
         </div>
 
         <div class="form-group">
-            <label for="currency">Brand</label>
-            <select class="form-control" th:field="*{brand}" id="brand">
-                <option th:each="brand : ${brands}"
-                        th:value="${brand.id}"
-                        th:text="${brand.name}">brand
-                </option>
-            </select>
-            <span class="has-error" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
-        </div>
-
-        <div class="form-group">
             <label for="currency">Category</label>
             <select class="form-control" th:field="*{categories}" id="categories" multiple>
                 <option th:each="category : ${categories}"
