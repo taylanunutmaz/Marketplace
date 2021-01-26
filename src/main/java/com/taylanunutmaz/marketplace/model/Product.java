@@ -32,6 +32,11 @@ public class Product {
     private Brand brand;
 
     @ManyToMany
+    @JoinTable(
+        name = "category_product",
+        joinColumns = @JoinColumn(name = "products_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private Set<Category> categories;
 
     @OneToMany

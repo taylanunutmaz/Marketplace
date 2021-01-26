@@ -4,13 +4,13 @@ import com.taylanunutmaz.marketplace.model.Category;
 import com.taylanunutmaz.marketplace.model.Product;
 import com.taylanunutmaz.marketplace.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Iterator;
 
 @Controller
 @RequestMapping("/products")
@@ -30,6 +30,7 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
+    @PreAuthorize("hasRole('ROLE_SELLER')")
     @GetMapping("/create")
     public String create(Model model) {
 
@@ -42,19 +43,27 @@ public class ProductController {
         return "products/create";
     }
 
+    @PreAuthorize("hasRole('ROLE_SELLER')")
     @PostMapping
-    public String store(@ModelAttribute("productForm") Product productForm) {
+    public String store(@ModelAttribute("productForm") Product productForm, Model model) {
         // validate
 
-        productRepository.save(productForm);
-
-        return "redirect:/welcome";
+        Product product = productRepository.save(productForm);
+        model.addAttribute("product", product);
+        return "products/show";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_BUYER')")
     @GetMapping
     public String list(Model model) {
         model.addAttribute("products", productRepository.findAll());
 
         return "products/list";
+    }
+    @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_BUYER')")
+    @GetMapping("/{product}")
+    public String show(@PathVariable(name = "product") Product product, Model model) {
+        model.addAttribute("product", product);
+        return "products/show";
     }
 }

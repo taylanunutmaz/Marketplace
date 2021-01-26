@@ -12,11 +12,13 @@
         </form>
 
         <h2>Welcome </span> <span sec:authentication="name"></span> | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
-        <div sec:authorize="hasRole('ROLE_BUYER')">
-            This content is only shown to buyer.
+        <div sec:authorize="hasAnyRole('ROLE_BUYER', 'ROLE_SELLER')">
+            This content is shown to buyer and seller.
+            <a th:href="@{/products}">List Products</a>
         </div>
         <div sec:authorize="hasRole('ROLE_SELLER')">
             This content is only shown to seller.
+            <a th:href="@{/products/create}">Create Product</a>
         </div>
     </div>
 </div>
