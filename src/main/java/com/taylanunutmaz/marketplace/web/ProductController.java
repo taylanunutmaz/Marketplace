@@ -17,14 +17,12 @@ import java.util.Iterator;
 public class ProductController {
     private CurrencyRepository currencyRepository;
     private CategoryRepository categoryRepository;
-    private ProductImageRepository productImageRepository;
     private ProductRepository productRepository;
 
     @Autowired
-    public ProductController(CurrencyRepository currencyRepository, CategoryRepository categoryRepository, ProductImageRepository productImageRepository, ProductRepository productRepository) {
+    public ProductController(CurrencyRepository currencyRepository, CategoryRepository categoryRepository, ProductRepository productRepository) {
         this.currencyRepository = currencyRepository;
         this.categoryRepository = categoryRepository;
-        this.productImageRepository = productImageRepository;
         this.productRepository = productRepository;
     }
 
@@ -35,7 +33,6 @@ public class ProductController {
         model.addAttribute("productForm", new Product());
         model.addAttribute("currencies", currencyRepository.findAll());
         model.addAttribute("categories", categoryRepository.findAll());
-        model.addAttribute("images", productImageRepository.findAll());
 
         return "products/create";
     }

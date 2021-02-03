@@ -20,9 +20,6 @@ public class User {
     @ManyToMany
     private Set<Role> roles;
 
-    @OneToOne(mappedBy = "user")
-    private ProfileImage image;
-
     public User() {
     }
 

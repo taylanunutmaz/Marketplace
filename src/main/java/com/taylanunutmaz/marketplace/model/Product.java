@@ -31,10 +31,6 @@ public class Product {
     @ManyToMany
     private Set<Category> categories;
 
-    @OneToMany
-    @JoinColumn(name = "product_id")
-    private Set<ProductImage> images;
-
     public Product() {
     }
 
@@ -108,13 +104,5 @@ public class Product {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
-    }
-
-    public Set<ProductImage> getImages() {
-        return images;
-    }
-
-    public void setImages(Set<ProductImage> images) {
-        this.images = images;
     }
 }
