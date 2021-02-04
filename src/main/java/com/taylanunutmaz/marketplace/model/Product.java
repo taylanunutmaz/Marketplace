@@ -33,12 +33,12 @@ public class Product {
     )
     private Set<Category> categories = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "basket_product",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    private Set<Basket> baskets = new HashSet<>();
+    private Set<CartItem> cartItems = new HashSet<>();
 
     public Product() {
     }

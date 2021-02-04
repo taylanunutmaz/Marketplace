@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "basket")
-public class Basket {
+@Table(name = "cart")
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,16 +17,16 @@ public class Basket {
     @Column(name = "total_list_price")
     private Integer totalListPrice;
 
-    @ManyToMany(mappedBy = "baskets")
-    private Set<Product> products = new HashSet<>();
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CartItem> cartItems = new HashSet<>();
 
-    @OneToOne(mappedBy = "basket")
+    @OneToOne(mappedBy = "cart")
     private User user;
 
-    public Basket() {
+    public Cart() {
     }
 
-    public Basket(Long id) {
+    public Cart(Long id) {
         this.id = id;
     }
 
@@ -54,12 +54,12 @@ public class Basket {
         this.totalListPrice = totalListPrice;
     }
 
-    public Set<Product> getProducts() {
-        return products;
+    public Set<CartItem> getCartItems() {
+        return cartItems;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setCartItems(Set<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 
     public User getUser() {
