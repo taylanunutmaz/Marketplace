@@ -14,7 +14,6 @@
     <h4 th:text="${product.listPrice}">listPrice</h4>
     <h4 th:text="${product.quantity}">quantity</h4>
     <h4 th:text="${product.vatRate}">vatRate</h4>
-    <h4 th:text="${product.currency.name}">currency.name</h4>
     <h4>Categories:</h4>
     <div th:each="category : ${product.categories}">
         <h5 th:text="${category.name}"></h5>

@@ -15,13 +15,11 @@ import java.util.Iterator;
 @Controller
 @RequestMapping("/products")
 public class ProductController {
-    private CurrencyRepository currencyRepository;
     private CategoryRepository categoryRepository;
     private ProductRepository productRepository;
 
     @Autowired
-    public ProductController(CurrencyRepository currencyRepository, CategoryRepository categoryRepository, ProductRepository productRepository) {
-        this.currencyRepository = currencyRepository;
+    public ProductController(CategoryRepository categoryRepository, ProductRepository productRepository) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
     }
@@ -31,7 +29,6 @@ public class ProductController {
     public String create(Model model) {
 
         model.addAttribute("productForm", new Product());
-        model.addAttribute("currencies", currencyRepository.findAll());
         model.addAttribute("categories", categoryRepository.findAll());
 
         return "products/create";

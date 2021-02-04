@@ -26,15 +26,19 @@ public class Product {
     @Column(name = "vat_rate")
     private Integer vatRate;
 
-    @ManyToOne
-    private Currency currency;
-
     @ManyToMany
     @JoinTable(name = "category_product",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Category> categories  = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "basket_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Basket> baskets = new HashSet<>();
 
     public Product() {
     }
@@ -61,14 +65,6 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
     }
 
     public Integer getSalePrice() {

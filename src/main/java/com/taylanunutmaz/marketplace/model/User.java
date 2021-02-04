@@ -24,6 +24,10 @@ public class User {
     )
     private Set<Role> roles;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private Basket basket = new Basket(this.id);
+
     public User() {
     }
 
