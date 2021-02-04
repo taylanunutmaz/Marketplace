@@ -1,6 +1,7 @@
 package com.taylanunutmaz.marketplace.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -29,7 +30,11 @@ public class Product {
     private Currency currency;
 
     @ManyToMany
-    private Set<Category> categories;
+    @JoinTable(name = "category_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Category> categories  = new HashSet<>();
 
     public Product() {
     }

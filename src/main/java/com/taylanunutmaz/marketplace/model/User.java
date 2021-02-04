@@ -18,6 +18,10 @@ public class User {
     private String passwordConfirm;
 
     @ManyToMany
+    @JoinTable(name = "role_user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private Set<Role> roles;
 
     public User() {
