@@ -1,10 +1,13 @@
 package com.taylanunutmaz.marketplace.model;
 
 import javax.persistence.*;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Set;
 
 @Entity
 @Table(name = "cart_item")
-public class CartItem {
+public class CartItem extends Observable implements Observer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -56,5 +59,18 @@ public class CartItem {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Product product = (Product) o;
+        Set<CartItem> cartItems = product.getCartItems();
+
+        for (CartItem cartItem : cartItems) {
+            cartItem.addObserver(cartItem.cart);
+        }
+
+        setChanged();
+        notifyObservers(o);
     }
 }

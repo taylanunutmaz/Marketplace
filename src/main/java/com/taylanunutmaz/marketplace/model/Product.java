@@ -2,11 +2,12 @@ package com.taylanunutmaz.marketplace.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Observable;
 import java.util.Set;
 
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product extends Observable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -73,6 +74,8 @@ public class Product {
 
     public void setSalePrice(Integer salePrice) {
         this.salePrice = salePrice;
+        setChanged();
+        notifyObservers(this);
     }
 
     public Integer getListPrice() {
@@ -80,7 +83,9 @@ public class Product {
     }
 
     public void setListPrice(Integer listPrice) {
-        this.listPrice = listPrice;
+        this.salePrice = salePrice;
+        setChanged();
+        notifyObservers(this);this.listPrice = listPrice;
     }
 
     public Integer getQuantity() {
@@ -105,5 +110,13 @@ public class Product {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public Set<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(Set<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 }

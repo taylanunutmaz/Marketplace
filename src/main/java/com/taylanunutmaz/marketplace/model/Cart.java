@@ -2,11 +2,13 @@ package com.taylanunutmaz.marketplace.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 
 @Entity
 @Table(name = "cart")
-public class Cart {
+public class Cart implements Observer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -68,5 +70,22 @@ public class Cart {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Integer sumOfListPrice = 0;
+        Integer sumOfSalePrice = 0;
+
+        for (CartItem cartItem : cartItems) {
+            sumOfListPrice += cartItem.getProduct().getListPrice();
+            sumOfSalePrice += cartItem.getProduct().getSalePrice();
+        }
+
+        setTotalSalePrice(sumOfSalePrice);
+        setTotalListPrice(sumOfListPrice);
+
+        System.out.println(sumOfSalePrice);
+        System.out.println(getTotalSalePrice());
     }
 }
