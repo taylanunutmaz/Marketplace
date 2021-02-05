@@ -1,5 +1,6 @@
 package com.taylanunutmaz.marketplace.web;
 
+import com.taylanunutmaz.marketplace.model.CartItem;
 import com.taylanunutmaz.marketplace.model.Category;
 import com.taylanunutmaz.marketplace.model.Product;
 import com.taylanunutmaz.marketplace.repository.*;
@@ -59,6 +60,7 @@ public class ProductController {
     @GetMapping("/{product}")
     public String show(@PathVariable(name = "product") Product product, Model model) {
         model.addAttribute("product", product);
+        model.addAttribute("cartItemForm", new CartItem());
         return "products/show";
     }
 }

@@ -25,7 +25,7 @@ public class User {
     private Set<Role> roles;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "cart_id")
     private Cart cart = new Cart(this.id);
 
     public User() {
