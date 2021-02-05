@@ -7,6 +7,10 @@
 <body>
 <div class="container">
     <h2>Show Product | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+    <div sec:authorize="hasRole('ROLE_SELLER')">
+        This content is only shown to seller.
+        <a th:href="@{/products/__${product.id}__/edit}">Edit Product</a>
+    </div>
     <h4 th:text="${product.id}">id</h4>
     <h4 th:text="${product.title}">title</h4>
     <h4 th:text="${product.description}">description</h4>
