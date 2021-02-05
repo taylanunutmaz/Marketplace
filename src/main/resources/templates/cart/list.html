@@ -7,6 +7,8 @@
 <body>
 <div class="container">
     <h2>Cart | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+    <h1 th:text="${cart.totalListPrice}"></h1>
+    <h1 th:text="${cart.totalSalePrice}"></h1>
     <div th:each="cartItem : ${cart.cartItems}">
         <a th:href="@{/products/__${cartItem.product.id}__}" th:text="${cartItem.product.title + ' - ' + cartItem.quantity}"></a>
     </div>

@@ -56,6 +56,18 @@ public class CartController {
             cartItem.setQuantity(cartItem.getQuantity() + quantity);
         }
 
+        Integer sumOfListPrice = 0;
+        Integer sumOfSalePrice = 0;
+
+        for (CartItem item : cart.getCartItems()) {
+            sumOfListPrice += cartItem.getProduct().getListPrice() * cartItem.getQuantity();
+            sumOfSalePrice += cartItem.getProduct().getSalePrice() * cartItem.getQuantity();
+        }
+
+        cart.setTotalSalePrice(sumOfSalePrice);
+        cart.setTotalListPrice(sumOfListPrice);
+
+        cartRepository.save(cart);
         cartItemRepository.save(cartItem);
 
         model.addAttribute("cart", cart);

@@ -78,8 +78,8 @@ public class Cart implements Observer {
         Integer sumOfSalePrice = 0;
 
         for (CartItem cartItem : cartItems) {
-            sumOfListPrice += cartItem.getProduct().getListPrice();
-            sumOfSalePrice += cartItem.getProduct().getSalePrice();
+            sumOfListPrice += cartItem.getProduct().getListPrice() * cartItem.getQuantity();
+            sumOfSalePrice += cartItem.getProduct().getSalePrice() * cartItem.getQuantity();
         }
 
         setTotalSalePrice(sumOfSalePrice);
